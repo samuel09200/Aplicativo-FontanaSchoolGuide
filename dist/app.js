@@ -1,0 +1,13 @@
+const tabs=[...document.querySelectorAll('[role="tab"]')];
+function selectTab(index){tabs.forEach((tab,i)=>{tab.setAttribute('aria-selected',String(i===index));tab.tabIndex=i===index?0:-1;document.getElementById(tab.getAttribute('aria-controls')).hidden=i!==index;});}
+tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>selectTab(i));tab.addEventListener('keydown',event=>{let next=i;if(event.key==='ArrowRight'||event.key==='ArrowLeft')next=1-i;else if(event.key==='Home')next=0;else if(event.key==='End')next=1;else return;event.preventDefault();selectTab(next);tabs[next].focus();});});
+document.getElementById('go-method').addEventListener('click',()=>{selectTab(1);tabs[1].focus();});
+const stages=[
+['Preparar la gestión','Revisa la información disponible del caso y el protocolo de atención antes de iniciar el contacto.','Confirma que cuentas con información actualizada y conoce las opciones autorizadas por la empresa.'],
+['Iniciar el contacto','Preséntate y realiza la validación de identidad siguiendo el protocolo definido por la empresa.','Protege la información del cliente. Valida la identidad antes de comunicar datos de la obligación.'],
+['Escuchar y comprender','Explica el motivo del contacto con claridad y escucha la situación que expresa el cliente.','Mantén un trato respetuoso, evita suposiciones y registra la información relevante.'],
+['Explorar alternativas','Revisa con el cliente las alternativas disponibles dentro de las condiciones autorizadas por la empresa.','No ofrezcas condiciones que no estén autorizadas. Confirma que el cliente comprende la alternativa.'],
+['Registrar y dar seguimiento','Resume el resultado del contacto y registra lo conversado según el procedimiento interno.','Si existe un acuerdo, confirma sus condiciones y el siguiente paso de seguimiento.']];
+let current=0;const stepButtons=[...document.querySelectorAll('.step')];
+function showStep(index){current=index;stepButtons.forEach((button,i)=>{button.classList.toggle('active',i===index);button.setAttribute('aria-pressed',String(i===index));});document.getElementById('detail-count').textContent=`ETAPA ${String(index+1).padStart(2,'0')} / 05`;document.getElementById('detail-title').textContent=stages[index][0];document.getElementById('detail-text').textContent=stages[index][1];document.getElementById('detail-note').textContent=stages[index][2];document.getElementById('previous').disabled=index===0;document.getElementById('next').disabled=index===4;}
+stepButtons.forEach((button,i)=>button.addEventListener('click',()=>showStep(i)));document.getElementById('previous').addEventListener('click',()=>{if(current>0)showStep(current-1);});document.getElementById('next').addEventListener('click',()=>{if(current<4)showStep(current+1);});
