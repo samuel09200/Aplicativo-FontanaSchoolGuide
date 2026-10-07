@@ -7,10 +7,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Fontana | Aula de formación</title>
     <meta name="description" content="Conoce la empresa y explora el recorrido de trabajo de cobranza.">
-    <link rel="icon" type="image/png" href="./imagenes/fontana-logo.png">
+    <link rel="icon" type="image/png" href="/imagenes/fontana-logo.png">
     <meta name="theme-color" content="#f9f9f9">
-    <script type="module" crossorigin src="./assets/index-Bh-hTqfz.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BMrRAsZg.css">
   </head>
   <body>
 
@@ -18,7 +16,7 @@
     <header>
       <a class="brand" href="./" aria-label="Fontana, inicio">
         <span class="brand-image">
-          <img src="./imagenes/fontana-logo.png" alt="Logo de Fontana">
+          <img src="/imagenes/fontana-logo.png" alt="Logo de Fontana">
           <strong class="brand-name">FONTANA</strong>
         </span>
       </a>
@@ -50,7 +48,7 @@
       <!-- BANNER INICIAL: modifica aquí el título y el mensaje de bienvenida. -->
       <section class="intro">
         <div>
-          <p class="eyebrow">BIENVENIDO A FONTANA</p>
+          <p class="welcome-label"><span>BIENVENIDO A</span> <strong>FONTANA</strong></p>
           <!-- FRASE: énfasis caligráfico en la idea principal y firma del autor. -->
           <h1 class="banner-quote">
             La excelencia en cobranzas no es una meta,<br>
@@ -64,14 +62,14 @@
 
           <!-- IMÁGENES: cambia los valores src por archivos de la carpeta imagenes. -->
           <div class="slides">
-            <img class="slide is-active" src="./imagenes/equipo-call-center.png" alt="Agentes atendiendo llamadas" aria-hidden="false">
-            <img class="slide" src="./imagenes/trabajo-en-equipo.png" alt="Compañeros uniendo sus manos" aria-hidden="true">
-            <img class="slide" src="./imagenes/equipo-atencion.png" alt="Equipo de agentes con auriculares" aria-hidden="true">
+            <img class="slide is-active" src="/imagenes/equipo-call-center.png" alt="Agentes atendiendo llamadas" aria-hidden="false">
+            <img class="slide" src="/imagenes/trabajo-en-equipo.png" alt="Compañeros uniendo sus manos" aria-hidden="true">
+            <img class="slide" src="/imagenes/equipo-atencion.png" alt="Equipo de agentes con auriculares" aria-hidden="true">
           </div>
 
           <!-- LOGO PEQUEÑO: se muestra sobre todas las fotos del carrusel. -->
           <span class="carousel-brand">
-            <img src="./imagenes/fontana-logo.png" alt="Logo de Fontana">
+            <img src="/imagenes/fontana-logo.png" alt="Logo de Fontana">
             <strong>FONTANA</strong>
           </span>
           <span class="card-kicker">TU PUNTO DE PARTIDA</span>
@@ -99,16 +97,25 @@
       <section id="learning" tabindex="-1" class="learning" aria-label="Contenido de introducción">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">EXPLORA EL MÓDULO</p>
+            <p class="eyebrow">Explora el módulo</p>
             <h2>Así comienza tu formación</h2>
           </div>
-          <span class="draft-label">Versión inicial</span>
         </div>
 
         <!-- PESTAÑAS: conserva los id y aria-controls; src/main.ts los utiliza. -->
         <div class="tabs" role="tablist" aria-label="Secciones de Conoce la empresa">
-          <button id="history-tab" role="tab" aria-selected="true" aria-controls="history" tabindex="0">Nuestra historia</button>
-          <button id="method-tab" role="tab" aria-selected="false" aria-controls="method" tabindex="-1">Método de trabajo</button>
+          <button id="history-tab" role="tab" aria-selected="true" aria-controls="history" tabindex="0">
+            <span class="tab-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v15M12 5C9 3 5 3 2 4v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1Z"/></svg>
+            </span>
+            Nuestra historia
+          </button>
+          <button id="method-tab" role="tab" aria-selected="false" aria-controls="method" tabindex="-1" disabled title="Pulsa «Explorar el método» al terminar Nuestra historia.">
+            <span class="tab-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 5h8a4 4 0 0 1 0 8H9a4 4 0 0 0 0 8h8"/></svg>
+            </span>
+            Método de trabajo
+          </button>
         </div>
 
         <!-- PESTAÑA 1 — NUESTRA HISTORIA: completa aquí la información oficial. -->
@@ -137,28 +144,60 @@
 
           <!-- TARJETAS DE HISTORIA: inicios, misión y valores, y presente de la empresa. -->
           <div class="story-grid">
-            <article>
-              <span>01</span>
-              <h4>Nuestros inicios</h4>
-              <p>Origen de la empresa y los primeros pasos de su trayectoria.</p>
-              <small>Por completar</small>
+            <article class="story-card" data-story="0">
+              <button class="story-curtain" aria-expanded="false" aria-controls="story-content-01">
+                <span class="curtain-face">
+                  <span class="curtain-number">01 · NUESTRA HISTORIA</span>
+                  <img src="/imagenes/fontana-logo.png" alt="" class="curtain-logo">
+                  <strong>Nuestros inicios</strong>
+                  <span class="curtain-status">Haz clic para descubrir</span>
+                </span>
+              </button>
+              <div id="story-content-01" class="story-content" hidden>
+                <span class="story-number">01</span>
+                <h4 tabindex="-1">Nuestros inicios</h4>
+                <p>Origen de la empresa y los primeros pasos de su trayectoria.</p>
+                <small>Por completar</small>
+                <button class="story-next primary">Siguiente →</button>
+              </div>
             </article>
-            <article>
-              <span>02</span>
-              <h4>Lo que nos guía</h4>
-              <p>Misión, visión y valores compartidos por nuestro equipo.</p>
-              <small>Por completar</small>
+            <article class="story-card" data-story="1">
+              <button class="story-curtain" aria-expanded="false" aria-controls="story-content-02" disabled>
+                <span class="curtain-face">
+                  <span class="curtain-number">02 · NUESTRA HISTORIA</span>
+                  <img src="/imagenes/fontana-logo.png" alt="" class="curtain-logo">
+                  <strong>Lo que nos guía</strong>
+                  <span class="curtain-status">Completa la tarjeta anterior</span>
+                </span>
+              </button>
+              <div id="story-content-02" class="story-content" hidden>
+                <span class="story-number">02</span>
+                <h4 tabindex="-1">Lo que nos guía</h4>
+                <p>Misión, visión y valores compartidos por nuestro equipo.</p>
+                <small>Por completar</small>
+                <button class="story-next primary">Siguiente →</button>
+              </div>
             </article>
-            <article>
-              <span>03</span>
-              <h4>Nuestro presente</h4>
-              <p>El equipo, los servicios y la forma en que trabajamos hoy.</p>
-              <small>Por completar</small>
+            <article class="story-card" data-story="2">
+              <button class="story-curtain" aria-expanded="false" aria-controls="story-content-03" disabled>
+                <span class="curtain-face">
+                  <span class="curtain-number">03 · NUESTRA HISTORIA</span>
+                  <img src="/imagenes/fontana-logo.png" alt="" class="curtain-logo">
+                  <strong>Nuestro presente</strong>
+                  <span class="curtain-status">Completa la tarjeta anterior</span>
+                </span>
+              </button>
+              <div id="story-content-03" class="story-content" hidden>
+                <span class="story-number">03</span>
+                <h4 tabindex="-1">Nuestro presente</h4>
+                <p>El equipo, los servicios y la forma en que trabajamos hoy.</p>
+                <small>Por completar</small>
+              </div>
             </article>
           </div>
           <div class="panel-footer">
-            <span>Continúa con el recorrido de una gestión.</span>
-            <button class="primary" id="go-method">Explorar el método</button>
+            <span id="story-progress" role="status">Abre la tarjeta 01 para comenzar el recorrido.</span>
+            <button class="primary" id="go-method" disabled>Explorar el método</button>
           </div>
         </div>
 
@@ -183,19 +222,19 @@
                 <span>01</span>
                 Preparar la gestión
               </button>
-              <button class="step" aria-pressed="false" data-step="1">
+              <button class="step" aria-pressed="false" data-step="1" disabled>
                 <span>02</span>
                 Iniciar el contacto
               </button>
-              <button class="step" aria-pressed="false" data-step="2">
+              <button class="step" aria-pressed="false" data-step="2" disabled>
                 <span>03</span>
                 Escuchar y comprender
               </button>
-              <button class="step" aria-pressed="false" data-step="3">
+              <button class="step" aria-pressed="false" data-step="3" disabled>
                 <span>04</span>
                 Explorar alternativas
               </button>
-              <button class="step" aria-pressed="false" data-step="4">
+              <button class="step" aria-pressed="false" data-step="4" disabled>
                 <span>05</span>
                 Registrar y dar seguimiento
               </button>
@@ -214,8 +253,36 @@
                 <button id="previous" disabled>Anterior</button>
                 <button id="next" class="primary">Siguiente etapa</button>
               </div>
+              <!-- Confirmación disponible únicamente en la etapa 05. -->
+              <label id="reading-confirmation" class="reading-confirmation" hidden>
+                <input id="company-read" type="checkbox" aria-controls="experience-section">
+                <span>He leído acerca de la empresa</span>
+              </label>
             </article>
           </div>
+          <!-- Se desbloquea al marcar la confirmación de lectura. -->
+          <section id="experience-section" class="experience-section" aria-labelledby="experience-title" hidden>
+            <p class="eyebrow">CONOZCAMOS TU EXPERIENCIA</p>
+            <h3 id="experience-title">¿Cuál es tu punto de partida?</h3>
+            <p class="experience-description">Selecciona la opción que mejor describe tu experiencia en cobranzas digitales.</p>
+            <form id="experience-form">
+              <fieldset id="experience-fields" disabled>
+                <legend>Experiencia en cobranzas digitales</legend>
+                <div class="experience-options">
+                  <label class="experience-option">
+                    <input type="radio" name="experience" value="experienced" required>
+                    <span><strong>Tengo experiencia</strong><small>Ya he trabajado en cobranzas digitales.</small></span>
+                  </label>
+                  <label class="experience-option">
+                    <input type="radio" name="experience" value="new" required>
+                    <span><strong>Soy completamente nuevo</strong><small>Es mi primera experiencia en cobranzas digitales.</small></span>
+                  </label>
+                </div>
+                <button type="submit" class="primary">Confirmar respuesta</button>
+              </fieldset>
+              <p id="experience-result" class="experience-result" role="status" hidden></p>
+            </form>
+          </section>
         </div>
       </section>
 
@@ -233,5 +300,6 @@
     </main>
 
     <!-- INTERACCIONES: src/main.ts controla las pestañas, etapas y el carrusel cada 2 segundos. -->
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

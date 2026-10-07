@@ -1,0 +1,23 @@
+{
+  "name": "fontana-aula",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "main": "desktop/main.mjs",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "check": "tsc --noEmit && tsc -p tsconfig.electron.json --noEmit",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "desktop:compile": "tsc -p tsconfig.electron.json",
+    "desktop:dev": "npm run desktop:compile && node scripts/desktop-dev.mjs",
+    "desktop:build": "npm run build && npm run desktop:compile",
+    "desktop:start": "npm run desktop:build && node scripts/desktop-start.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.4",
+    "electron": "44.6.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.3"
+  }
+}
