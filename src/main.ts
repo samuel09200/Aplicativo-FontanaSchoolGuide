@@ -9,6 +9,12 @@ function element<T extends HTMLElement>(selector: string): T {
 }
 
 // NAVEGACIÓN ENTRE HISTORIA Y MÉTODO
+// La ruta permanece visible; su alto determina el espacio al desplazar el contenido.
+const learningPath = element('.learning-path');
+const pathResizeObserver = new ResizeObserver(() => {
+  document.documentElement.style.setProperty('--path-height', `${learningPath.getBoundingClientRect().height}px`);
+});
+pathResizeObserver.observe(learningPath);
 const tabs = [...document.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
 const methodTab = element<HTMLButtonElement>('#method-tab');
 let methodUnlocked = false;
@@ -47,8 +53,49 @@ function focusContent(): void {
   content.focus({ preventScroll: true });
 }
 
+// HISTORIA: abre una cortina y pulsa Siguiente para habilitar la próxima.
+const storyCards = [...document.querySelectorAll<HTMLElement>('[data-story]')];
+const goMethod = element<HTMLButtonElement>('#go-method');
+const storyProgress = element('#story-progress');
+const openedStories = new Set<number>();
+let highestUnlockedStory = 0;
+storyCards.forEach((card, index) => {
+  const curtain = card.querySelector<HTMLButtonElement>('.story-curtain')!;
+  const content = card.querySelector<HTMLElement>('.story-content')!;
+  const advance = card.querySelector<HTMLButtonElement>('.story-next');
+  curtain.addEventListener('click', () => {
+    if (index > highestUnlockedStory || openedStories.has(index)) return;
+    openedStories.add(index);
+    content.hidden = false;
+    curtain.setAttribute('aria-expanded', 'true');
+    curtain.setAttribute('aria-hidden', 'true');
+    curtain.inert = true;
+    card.classList.add('is-open');
+    content.querySelector<HTMLElement>('h4')!.focus({ preventScroll: true });
+    const allOpened = openedStories.size === storyCards.length;
+    goMethod.disabled = !allOpened;
+    storyProgress.textContent = allOpened
+      ? 'Has abierto las tres partes de la historia. Ya puedes explorar el método.'
+      : `Historia ${String(index + 1).padStart(2, '0')} abierta. Pulsa Siguiente para habilitar la próxima.`;
+  });
+  advance?.addEventListener('click', () => {
+    if (!openedStories.has(index) || index !== highestUnlockedStory) return;
+    const nextCard = storyCards[index + 1];
+    if (!nextCard) return;
+    highestUnlockedStory = index + 1;
+    const nextCurtain = nextCard.querySelector<HTMLButtonElement>('.story-curtain')!;
+    nextCurtain.disabled = false;
+    nextCurtain.querySelector<HTMLElement>('.curtain-status')!.textContent = 'Haz clic para descubrir';
+    advance.hidden = true;
+    storyProgress.textContent = `Tarjeta ${String(index + 2).padStart(2, '0')} habilitada. Haz clic en su cortina para abrirla.`;
+    nextCurtain.focus({ preventScroll: true });
+    nextCard.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'nearest' });
+  });
+});
+
 // La pestaña se habilita únicamente al continuar desde Nuestra historia.
-element('#go-method').addEventListener('click', () => {
+goMethod.addEventListener('click', () => {
+  if (openedStories.size !== storyCards.length) return;
   methodUnlocked = true;
   methodTab.disabled = false;
   methodTab.removeAttribute('title');
@@ -154,4 +201,7 @@ document.addEventListener('visibilitychange', startCarousel);
 startCarousel();
 
 // Evita temporizadores duplicados cuando Vite actualiza el código al guardar.
-if (import.meta.hot) import.meta.hot.dispose(() => window.clearInterval(carouselTimer));
+if (import.meta.hot) import.meta.hot.dispose(() => {
+  window.clearInterval(carouselTimer);
+  pathResizeObserver.disconnect();
+});

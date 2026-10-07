@@ -7,6 +7,7 @@
   --muted: #626672;
   --line: #e5e7ed;
   --paper: #f5ecd9;
+  --path-height: 120px;
   font-family: 'Segoe UI', Arial, sans-serif;
   color: var(--ink);
   background: var(--paper);
@@ -117,6 +118,38 @@ main  {
   color: var(--red);
   font-size: 11px;
 }
+.welcome-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  position: relative;
+  padding-bottom: 14px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: clamp(16px, 1.6vw, 19px);
+  font-weight: 600;
+  letter-spacing: -.5px;
+  color: var(--navy);
+  line-height: 1.3;
+}
+.welcome-label strong {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: clamp(27px, 2.6vw, 34px);
+  font-weight: 600;
+  letter-spacing: -.5px;
+  color: var(--red);
+}
+.welcome-label::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 88px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), #d4af3700);
+}
 h1  {
   font-size: clamp(32px, 3.6vw, 47px);
   line-height: 1.16;
@@ -214,7 +247,7 @@ h1  {
 /* 4. PESTAÑAS Y PANEL: superficies claras y espacios amplios */
 .learning  {
   margin-bottom: 32px;
-  scroll-margin-top: 24px;
+  scroll-margin-top: calc(var(--path-height) + 24px);
   /* Una sola superficie para el encabezado, las pestañas y el contenido. */
   border: 1px solid #d4af3726;
   border-radius: 24px;
@@ -240,14 +273,6 @@ h1  {
   font-weight: 600;
   letter-spacing: -.7px;
   line-height: 1.3;
-}
-.draft-label  {
-  font-size: 12px;
-  color: var(--muted);
-  border: 1px solid #dfe2e9;
-  border-radius: 6px;
-  padding: 4px 10px;
-  white-space: nowrap;
 }
 .tabs  {
   display: flex;
@@ -410,6 +435,54 @@ h4  {
   font-size: 12px;
   color: #777d89;
 }
+/* Cortinas Fontana: dos paños se abren sin difuminar el contenido. */
+.story-card { position: relative; min-height: 320px; overflow: hidden; }
+.story-content { animation: appear .6s ease; }
+.story-number { color: var(--red); font-size: 12px; font-weight: 700; }
+.story-next { display: block; margin-top: 22px; }
+.story-curtain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: #fff4dc;
+  isolation: isolate;
+  transition: visibility 0s .6s;
+}
+.story-curtain::before, .story-curtain::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  width: 50%;
+  z-index: -1;
+  background:
+    repeating-linear-gradient(90deg, #ffffff06 0, transparent 16px, #11182724 34px, #ffffff06 48px),
+    radial-gradient(ellipse at 50% 0%, #d4af3733, transparent 75%),
+    linear-gradient(150deg, #8b1538, #53162e 65%, #1f2a37);
+  transition: transform .65s cubic-bezier(.22, 1, .36, 1);
+}
+.story-curtain::before { left: 0; border-right: 1px solid #d4af3755; }
+.story-curtain::after { right: 0; border-left: 1px solid #11182730; }
+.curtain-face { display: flex; flex-direction: column; align-items: center; gap: 13px; transition: opacity .2s; }
+.curtain-number { font-size: 10px; letter-spacing: 1.6px; color: #efd58d; }
+.curtain-logo { width: 90px; height: 90px; object-fit: contain; filter: drop-shadow(0 5px 10px #11182750); }
+.curtain-face strong { font-family: Georgia, 'Times New Roman', serif; font-size: 24px; font-style: italic; font-weight: 500; }
+.curtain-status { padding: 5px 12px; border: 1px solid #d4af3755; border-radius: 20px; background: #ffffff0a; font-size: 12px; }
+.story-curtain:hover:not(:disabled) .curtain-status { background: #d4af3726; border-color: #d4af37; }
+.story-curtain:focus-visible { outline-color: #efd58d; outline-offset: -6px; }
+.story-curtain:disabled { opacity: 1; cursor: not-allowed; }
+.story-curtain:disabled::before, .story-curtain:disabled::after { filter: saturate(.25); }
+.story-curtain:disabled .curtain-face { opacity: .7; }
+.story-card.is-open .story-curtain { visibility: hidden; pointer-events: none; }
+.story-card.is-open .story-curtain::before { transform: translateX(-102%); }
+.story-card.is-open .story-curtain::after { transform: translateX(102%); }
+.story-card.is-open .curtain-face { opacity: 0; }
 .panel-footer  {
   grid-column: 1/-1;
   display: flex;
@@ -689,6 +762,9 @@ footer b  {
 
 /* 8. RUTA DE APRENDIZAJE: pasos conectados sobre una franja crema. */
 .learning-path {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
   align-items: center;
   gap: 32px;
@@ -699,6 +775,7 @@ footer b  {
   background: radial-gradient(ellipse at 0% 0%, #d4af371c, transparent 65%), linear-gradient(120deg, #fffcf4, #f7efde);
   box-shadow: inset 0 1px 0 #ffffffdd, 0 6px 18px #49381608;
 }
+button, input { scroll-margin-top: calc(var(--path-height) + 16px); }
 .path-label {
   flex: 0 0 160px;
   color: #4e535d;
@@ -769,6 +846,14 @@ footer b  {
   font-size: 1.12em;
   font-weight: 700;
   margin-top: 10px;
+}
+.banner-quote em::after {
+  content: '”';
+  color: #a67e2199;
+  font-size: 1.2em;
+  font-weight: 400;
+  font-style: normal;
+  margin-left: .08em;
 }
 .quote-author  {
   display: flex;
@@ -852,6 +937,31 @@ header .brand:focus-visible { outline-color: #f6d978; }
   color: var(--navy);
   border-color: #cba64a;
   box-shadow: inset 0 1px 0 #fff8de, 0 0 0 5px #d4af3726, 0 3px 12px #b88c2930;
+}
+/* El paso actual respira en vino y dorado; los pendientes conservan el blanco. */
+.learning-path li[aria-current="step"] .path-number {
+  color: var(--red);
+  border-color: #d4af3799;
+  background: linear-gradient(135deg, #fffdf5, #f5e6b7, #faf2df);
+  background-size: 200% 200%;
+  font-weight: 700;
+  animation: active-path-pulse 2.8s ease-in-out infinite;
+}
+@keyframes active-path-pulse {
+  0%, 100% {
+    background-position: 0% 50%;
+    box-shadow: inset 0 1px 0 #fffaf0, 0 0 0 3px #d4af3710, 0 3px 12px #1f2a3710;
+  }
+  50% {
+    background-position: 100% 50%;
+    box-shadow: inset 0 1px 0 #fffaf0, 0 0 0 7px #d4af3728, 0 0 22px #8b153825;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  .learning-path li[aria-current="step"] .path-number {
+    animation: none;
+    box-shadow: inset 0 1px 0 #fffaf0, 0 0 0 3px #d4af3720;
+  }
 }
 @media(max-width:760px) {
   .path-label { font-size: 17px; }
