@@ -2,4 +2,7 @@ node_modules/
 dist/
 .vite/
 *.log
-desktop/
+server-dist/
+.env
+.env.*
+!.env.example
